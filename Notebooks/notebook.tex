@@ -1,0 +1,806 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{PCA\_Final}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \section{Ebb \& Flow}\label{ebb-flow}
+
+    \subsection{Issue 2}\label{issue-2}
+
+    Today I am going to take a look at a US Equity market statistical
+arbitrage strategy from academic literature. The paper I will be using
+for academic reference can be downloaded at this link:
+https://www.scribd.com/document/61438209/AvellanedaLeeStatArb20090616
+
+Avellandea and Lee give a nice theoretical approach to statistical
+arbitrage and offer two different methods of implementation (PCA and
+ETF). As with most academic literature, however, much of the details and
+difficulties of actually implementing such a strategy are not discussed.
+
+\textbf{The purpose of this issue will be to:} \textbf{1)} Address
+implementation details with code \textbf{2)} Consider trading challenges
+surrounding this strategy that are not discussed in the paper and
+\textbf{3)} Think about how statistical techniques discussed in the
+paper can be used outside of the realm of traditional statistical
+arbitrage
+
+    \subsubsection{Implementing Principal Component
+Analysis}\label{implementing-principal-component-analysis}
+
+    In the quantitative investing realm, and even in the fundamental realm,
+factor investing has gained popularity as of late. One of the most
+popular methods used to analyze and identify uncorrelated factors is
+principal component analysis. Before we jump into a PCA analysis, lets
+import some data and define our universe, which will be the SP500 over a
+5 year time period from February 2013 to February 2018:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{p}
+        \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+        \PY{k+kn}{import} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{decomposition}
+        \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{decomposition} \PY{k}{import} \PY{n}{PCA}
+        \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{preprocessing} \PY{k}{import} \PY{n}{StandardScaler}
+        \PY{k+kn}{import} \PY{n+nn}{usequity\PYZus{}functions} \PY{k}{as} \PY{n+nn}{f}
+        \PY{k+kn}{import} \PY{n+nn}{importlib}
+        \PY{n}{importlib}\PY{o}{.}\PY{n}{reload}\PY{p}{(}\PY{n}{f}\PY{p}{)}
+        \PY{k+kn}{from} \PY{n+nn}{matplotlib} \PY{k}{import} \PY{n}{pyplot} \PY{k}{as} \PY{n}{plt}
+        
+        \PY{n}{csv} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{all\PYZus{}stocks\PYZus{}5yr.csv}\PY{l+s+s1}{\PYZsq{}}
+        \PY{n}{index}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{date}\PY{l+s+s2}{\PYZdq{}}
+        \PY{n}{columns}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Name}\PY{l+s+s2}{\PYZdq{}}
+        \PY{n}{values}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{close}\PY{l+s+s2}{\PYZdq{}}
+        
+        \PY{n}{stocks\PYZus{}in} \PY{o}{=} \PY{n}{p}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{n}{csv}\PY{p}{)}
+        \PY{n}{stocks\PYZus{}in}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{date}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{p}\PY{o}{.}\PY{n}{to\PYZus{}datetime}\PY{p}{(}\PY{n}{stocks\PYZus{}in}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{date}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+        \PY{n}{stocks} \PY{o}{=} \PY{n}{f}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{n}{stocks\PYZus{}in}\PY{p}{,}\PY{n}{index}\PY{o}{=}\PY{n}{index}\PY{p}{,}\PY{n}{columns}\PY{o}{=}\PY{n}{columns}\PY{p}{,}\PY{n}{values}\PY{o}{=}\PY{n}{values}\PY{p}{)}
+        \PY{n}{stocks\PYZus{}ret} \PY{o}{=} \PY{n}{f}\PY{o}{.}\PY{n}{get\PYZus{}ret}\PY{p}{(}\PY{n}{stocks}\PY{p}{)}
+        \PY{n}{stocks\PYZus{}ret} \PY{o}{=} \PY{n}{stocks\PYZus{}ret}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{:}\PY{n+nb}{len}\PY{p}{(}\PY{n}{stocks\PYZus{}ret}\PY{p}{)}\PY{p}{]}
+        \PY{n}{stocks} \PY{o}{=} \PY{n}{stocks}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{:}\PY{n+nb}{len}\PY{p}{(}\PY{n}{stocks}\PY{p}{)}\PY{p}{]}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{n}{stocks\PYZus{}ret}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{:}\PY{l+m+mi}{5}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{:}\PY{l+m+mi}{7}\PY{p}{]}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}2}]:} Name               A       AAL       AAP      AAPL      ABBV       ABC  \textbackslash{}
+        date                                                                     
+        2013-02-11 -0.010648 -0.019661 -0.006464  0.010422 -0.011034 -0.002772   
+        2013-02-12  0.000448 -0.013140  0.002679 -0.025067 -0.011994  0.004277   
+        2013-02-13  0.002913  0.027330  0.004707 -0.001903 -0.004235 -0.006814   
+        2013-02-14 -0.003799 -0.045703 -0.001646 -0.000899  0.036859  0.002787   
+        2013-02-15 -0.052266  0.036455  0.002029 -0.013780  0.027618 -0.003635   
+        
+        Name             ABT  
+        date                  
+        2013-02-11 -0.004359  
+        2013-02-12  0.001168  
+        2013-02-13  0.004665  
+        2013-02-14  0.006965  
+        2013-02-15  0.010951  
+\end{Verbatim}
+            
+    This is a snapshot of our refined universe and corresponding daily
+returns. In order to run a PCA, I need to first estimate the correlation
+or covariance matrix. I will look at the correlation matrix as it is
+more intuitive if the reader does not have experience with PCA:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{n}{cor\PYZus{}mat} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{corrcoef}\PY{p}{(}\PY{n}{stocks\PYZus{}ret}\PY{o}{.}\PY{n}{T}\PY{p}{)}
+        \PY{n}{cor\PYZus{}mat\PYZus{}print} \PY{o}{=} \PY{n}{p}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{cor\PYZus{}mat}\PY{p}{)}
+        \PY{n}{cor\PYZus{}mat\PYZus{}print}\PY{o}{.}\PY{n}{index} \PY{o}{=} \PY{n}{cor\PYZus{}mat\PYZus{}print}\PY{o}{.}\PY{n}{columns} \PY{o}{=} \PY{n}{stocks\PYZus{}ret}\PY{o}{.}\PY{n}{columns}
+        \PY{n}{cor\PYZus{}mat\PYZus{}print}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{:}\PY{l+m+mi}{5}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{:}\PY{l+m+mi}{5}\PY{p}{]}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}3}]:} Name         A       AAL       AAP      AAPL      ABBV
+        Name                                                  
+        A     1.000000  0.292168  0.185823  0.275706  0.351972
+        AAL   0.292168  1.000000  0.191343  0.210004  0.225260
+        AAP   0.185823  0.191343  1.000000  0.127888  0.211054
+        AAPL  0.275706  0.210004  0.127888  1.000000  0.181927
+        ABBV  0.351972  0.225260  0.211054  0.181927  1.000000
+\end{Verbatim}
+            
+    Here we see a snapshot of the correlation matrix for reference. It
+should be noted that one of the most explored topics in quantitative
+finance is proper estimation of the correlation (or covariance) matrix
+through shrinkage or regularization. We will skip this issue for now,
+but if we are to ever get a stat arb strategy up and running, this is
+crucial to consider.
+
+Now lets calculate eigenvalues and eigenvectors of our data set by
+running a PCA. Eigenvectors (returned at unit length) can be thought of
+as \textbf{standardized} portfolio weights for uncorrelated factors and
+the eigenvalue corresponding to each eigenvector can be considered the
+amount of variance that each factor explains relating to the original
+dataset.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}4}]:} \PY{n}{eig\PYZus{}vals}\PY{p}{,}\PY{n}{eig\PYZus{}vecs} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{linalg}\PY{o}{.}\PY{n}{eig}\PY{p}{(}\PY{n}{cor\PYZus{}mat}\PY{p}{)}
+        
+        \PY{c+c1}{\PYZsh{} Make a list of (eigenvalue, eigenvector) tuples}
+        \PY{n}{eig\PYZus{}pairs} \PY{o}{=} \PY{p}{[}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{abs}\PY{p}{(}\PY{n}{eig\PYZus{}vals}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{)}\PY{p}{,} \PY{n}{eig\PYZus{}vecs}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{n}{i}\PY{p}{]}\PY{p}{)} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{eig\PYZus{}vals}\PY{p}{)}\PY{p}{)}\PY{p}{]}
+        
+        \PY{c+c1}{\PYZsh{} Sort the (eigenvalue, eigenvector) tuples from high to low}
+        \PY{n}{eig\PYZus{}pairs}\PY{o}{.}\PY{n}{sort}\PY{p}{(}\PY{n}{key}\PY{o}{=}\PY{k}{lambda} \PY{n}{x}\PY{p}{:} \PY{n}{x}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{reverse}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+\end{Verbatim}
+
+
+    Since eigenvalues explain the variance of each uncorrelated factor in
+our dataset, lets plot each eigenvalue and their cumulative sum for the
+first 20 factors to get a feel for the structure of our universe:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{n}{tot} \PY{o}{=} \PY{n+nb}{sum}\PY{p}{(}\PY{n}{eig\PYZus{}vals}\PY{p}{)}
+        \PY{n}{var\PYZus{}exp} \PY{o}{=} \PY{p}{[}\PY{p}{(}\PY{n}{i} \PY{o}{/} \PY{n}{tot}\PY{p}{)}\PY{o}{*}\PY{l+m+mi}{100} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{sorted}\PY{p}{(}\PY{n}{eig\PYZus{}vals}\PY{p}{,} \PY{n}{reverse}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}\PY{p}{]}
+        \PY{n}{var\PYZus{}exp} \PY{o}{=} \PY{n}{var\PYZus{}exp}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{:}\PY{l+m+mi}{20}\PY{p}{]} \PY{c+c1}{\PYZsh{}\PYZsh{} took top 20}
+        \PY{n}{cum\PYZus{}var\PYZus{}exp} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{cumsum}\PY{p}{(}\PY{n}{var\PYZus{}exp}\PY{p}{)}
+        \PY{k+kn}{from} \PY{n+nn}{matplotlib} \PY{k}{import} \PY{n}{pyplot} \PY{k}{as} \PY{n}{plt}
+        \PY{k}{with} \PY{n}{plt}\PY{o}{.}\PY{n}{style}\PY{o}{.}\PY{n}{context}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{seaborn\PYZhy{}whitegrid}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{:}
+            \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{8}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{)}\PY{p}{)}
+        
+            \PY{n}{plt}\PY{o}{.}\PY{n}{bar}\PY{p}{(}\PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{20}\PY{p}{)}\PY{p}{,} \PY{n}{var\PYZus{}exp}\PY{p}{,} \PY{n}{alpha}\PY{o}{=}\PY{l+m+mf}{0.5}\PY{p}{,} \PY{n}{align}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{center}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+                    \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{individual explained variance}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+            \PY{n}{plt}\PY{o}{.}\PY{n}{step}\PY{p}{(}\PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{20}\PY{p}{)}\PY{p}{,} \PY{n}{cum\PYZus{}var\PYZus{}exp}\PY{p}{,} \PY{n}{where}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{mid}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+                     \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{cumulative explained variance}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+            \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Explained variance ratio}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+            \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Principal components}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+            \PY{n}{plt}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{n}{loc}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{best}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+            \PY{n}{plt}\PY{o}{.}\PY{n}{tight\PYZus{}layout}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_12_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    As we see, and perhaps expect, our universe is dominated by the first
+principal component, which is widely considered the "market" factor. One
+of the most overlooked realities of the stock market, however, is the
+dynamic nature of the factor structure. Running a PCA on the entire data
+set shows (above) that the market factor represents about 30 percent of
+the variance of the entire set. If we run a PCA on a rolling subset of
+our 5-year time period, we see significant variability in our factor
+structure across time.
+
+An extension of my research from issue 1 notes that when overall market
+volatility is high (represented by the VIX), the market factor explains
+more of the variance in our data and when the VIX is comparably low, it
+explains less. This may seem obvious but it is important to consider.
+Another way to think about this idea is that \textbf{systematic}
+components are a stronger driver of return in high VIX environments and
+\textbf{idiosyncratic} components are a stronger driver of return in low
+VIX environments. There is more likely to be mispricings in individual
+stocks in high VIX environments.
+
+I also want to mention that while it is widely accepted that the first
+principal component is almost always the market factor, it is unclear
+what the 2nd, 3rd, 4th etc components are at any given time. I think it
+is reasonable to say that these remaining components are time varying.
+
+To illustrate the changing factor structure, lets run a PCA on the last
+30 days noting from qualitative observation that volatility has been
+much higher than the average of our dataset (I used an asyptotic
+approach as a 30 x 470 matrix is not invertible. This is an a topic for
+another time):
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}7}]:} \PY{n}{stocks\PYZus{}ret\PYZus{}subset} \PY{o}{=} \PY{n}{stocks\PYZus{}ret}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{30}\PY{p}{:}\PY{p}{]}
+        \PY{n}{cor\PYZus{}mat\PYZus{}sub} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{corrcoef}\PY{p}{(}\PY{n}{stocks\PYZus{}ret\PYZus{}subset}\PY{o}{.}\PY{n}{T}\PY{p}{)}
+        \PY{n}{eig\PYZus{}vals\PYZus{}sub}\PY{p}{,}\PY{n}{eig\PYZus{}vecs\PYZus{}sub} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{linalg}\PY{o}{.}\PY{n}{eig}\PY{p}{(}\PY{n}{cor\PYZus{}mat\PYZus{}sub}\PY{p}{)}
+        \PY{n}{eig\PYZus{}pairs\PYZus{}sub} \PY{o}{=} \PY{p}{[}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{abs}\PY{p}{(}\PY{n}{eig\PYZus{}vals\PYZus{}sub}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{)}\PY{p}{,} \PY{n}{eig\PYZus{}vecs\PYZus{}sub}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{n}{i}\PY{p}{]}\PY{p}{)} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{eig\PYZus{}vals\PYZus{}sub}\PY{p}{)}\PY{p}{)}\PY{p}{]}
+        \PY{n}{eig\PYZus{}pairs\PYZus{}sub}\PY{o}{.}\PY{n}{sort}\PY{p}{(}\PY{n}{key}\PY{o}{=}\PY{k}{lambda} \PY{n}{x}\PY{p}{:} \PY{n}{x}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{reverse}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+        
+        \PY{n}{tot\PYZus{}sub} \PY{o}{=} \PY{n+nb}{sum}\PY{p}{(}\PY{n}{eig\PYZus{}vals\PYZus{}sub}\PY{p}{)}
+        \PY{n}{var\PYZus{}exp\PYZus{}sub} \PY{o}{=} \PY{p}{[}\PY{p}{(}\PY{n}{i} \PY{o}{/} \PY{n}{tot\PYZus{}sub}\PY{p}{)}\PY{o}{*}\PY{l+m+mi}{100} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{sorted}\PY{p}{(}\PY{n}{eig\PYZus{}vals\PYZus{}sub}\PY{p}{,} \PY{n}{reverse}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}\PY{p}{]}
+        \PY{n}{var\PYZus{}exp\PYZus{}sub} \PY{o}{=} \PY{n}{var\PYZus{}exp\PYZus{}sub}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{:}\PY{l+m+mi}{20}\PY{p}{]} \PY{c+c1}{\PYZsh{}\PYZsh{} took top 20}
+        \PY{n}{cum\PYZus{}var\PYZus{}exp\PYZus{}sub} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{cumsum}\PY{p}{(}\PY{n}{var\PYZus{}exp\PYZus{}sub}\PY{p}{)}
+        \PY{k+kn}{from} \PY{n+nn}{matplotlib} \PY{k}{import} \PY{n}{pyplot} \PY{k}{as} \PY{n}{plt}
+        \PY{k}{with} \PY{n}{plt}\PY{o}{.}\PY{n}{style}\PY{o}{.}\PY{n}{context}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{seaborn\PYZhy{}whitegrid}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{:}
+            \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{8}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{)}\PY{p}{)}
+        
+            \PY{n}{plt}\PY{o}{.}\PY{n}{bar}\PY{p}{(}\PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{20}\PY{p}{)}\PY{p}{,} \PY{n}{var\PYZus{}exp\PYZus{}sub}\PY{p}{,} \PY{n}{alpha}\PY{o}{=}\PY{l+m+mf}{0.5}\PY{p}{,} \PY{n}{align}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{center}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+                    \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{individual explained variance}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+            \PY{n}{plt}\PY{o}{.}\PY{n}{step}\PY{p}{(}\PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{20}\PY{p}{)}\PY{p}{,} \PY{n}{cum\PYZus{}var\PYZus{}exp\PYZus{}sub}\PY{p}{,} \PY{n}{where}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{mid}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+                     \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{cumulative explained variance}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+            \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Explained variance ratio}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+            \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Principal components}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+            \PY{n}{plt}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{n}{loc}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{best}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+            \PY{n}{plt}\PY{o}{.}\PY{n}{tight\PYZus{}layout}\PY{p}{(}\PY{p}{)}
+        \PY{k+kn}{import} \PY{n+nn}{warnings}\PY{p}{;} \PY{n}{warnings}\PY{o}{.}\PY{n}{simplefilter}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ignore}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_14_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    Here we can see the significant difference in factor structure. The
+market factor explains 40 percent of variance now and the first 2
+principal components explain about 50 percent. Compare this to the graph
+from our previous example where we needed roughly 12 factors to explain
+50 percent of variance.
+
+    \paragraph{PCA in Statistical
+Arbitrage}\label{pca-in-statistical-arbitrage}
+
+    Now lets talk a little bit about how PCA is used in a conventional
+statistical arbitrage strategy. As stated by Avellaneda and Lee (2009),
+a conventional statistical arbitrage strategy is just a collection of
+pairs trades. The goal is to model the relative value of one stock
+versus a basket of stocks and trade market neutral positions (long the
+stock and short the factor or visa versa) when the relative value of the
+two components diverges far from its theoretical value.
+
+More specifically, a stat arb strategy typically "purges" individual
+stocks of its systematic component by regressing individual stock
+returns (or manually contructed portfolios) on systematic components
+(such as factors calculated via PCA) and then models its residuals as a
+mean reverting process. \textbf{The residuals of the regression
+correspond to the variability in stock returns NOT explained by our
+selected principal components}.
+
+Now lets consider actually trading this strategy, which is not discussed
+in Avellaneda and Lee:
+
+The alpha of these time series regressions is considered the abnormal
+return. From rearranging a simple 2 factor model equation as an example
+(this can be applied to any number of factors) we can see that return
+not explained by our factors is directly attributable to alpha and
+epsilon, and can intuit how conditionally modelling epsilon will help us
+find alpha \textbf{relative to our betas}.
+
+It is important to also note that in order to trade this in a market
+neutral fashion, as nearly all statistical arbitrage strategies do, we
+will need to scale our portfolio weights so that beta is equal to 1. I
+have provided an analytical solution for solving for these weights with
+a 2 factor model. In industry, proxies are often used to represent
+factors and the following portfolio weight calculations are not needed
+since eigenvectors, a collection of N assets, is replaced with 1 asset.
+That said, if we ever want to calculate weights for a smaller universe,
+this analytical solution will be very useful:
+
+    \(Scale \, portfolio \, weights \, so \, beta \, equals \, 1:\)
+
+\[ Y = \alpha + \beta_{1} Return_{F1} + \beta_{2} Return_{F2} + \epsilon\]
+
+\[ Y = \alpha + 1*weights + \epsilon\]
+
+\[ \alpha + \epsilon = Y - weights \]
+
+\[ where \, weights \, is \, a \, vector \, combining \, factor \, exposure \, scaled \, so \,\, \beta =1 \quad {**} see \, construction  \]
+
+\({Uncondiationally:}\)
+
+\[\sum_{i=0}^N \epsilon_{i} = 0\]
+
+\({Conditionally:}\)
+
+\[\sum_{i=0}^n \epsilon_{i} \not = 0  \quad where \, n \, is \, a \, subset\, of\,N \]
+
+    \[{**}Construction:\]
+
+\[ Y = \alpha + \beta_{1} Return_{F1} + \beta_{2} Return_{F2} + \epsilon\]
+
+\[ \quad where \quad Return_{F1} = \, Eigenvector_1*R_{t} \,\,\, and \,\,\, Return_{F2} = \, Eigenvector_2*R_{t} \]
+
+\[ Vec_{12} = \beta_{1} * {Eigenvector_1} + \beta_{2} * {Eigenvector_2}\]
+
+\[\quad where \quad Vec_{12} \, is \, portfolio \, weights\, with \, combined \, exposure \, to \, Factor_1 \, and \, Factor_2 \]
+
+\[ Y = \alpha + \beta_{3} * Vec_{12} + \epsilon\]
+
+\[ w = \beta_{1} * \beta_{3} * {Eigenvector_1}  +  \beta_{2} * \beta_{3} * {Eigenvector_2} \]
+
+\[ \quad where \quad w = scaled \, weights \]
+
+\[ Y = \alpha + \beta_{4}*w + \epsilon \]
+
+\[ \quad where \quad \beta_{4} = 1 \]
+
+    In this particular situation, our weights are scaled for market
+neutrality, but they can be scaled in practice to have any desired beta
+exposure. As mentioned before, statistical arbitrage strategies
+conditionally predict the residuals of the regression above and look to
+trade it back to its theoretical value with expectation of quick mean
+reversion. This is formalized by creating a test statitic that measures
+distance from the mean, similar to a z-score for a normal distribution.
+
+\textbf{I am more interested, however, in looking at alpha that is
+persistent in the market.} Instead of using PCA or similar techniques to
+trade mean reversion back to a mathematical equilibrium, I will design
+strategies that offer alpha above a benchmark but likely co-move with
+this benchmark. Technically, this means I am okay with beta exposure and
+will often not need to trade the benchmark (a common implementation
+difficulty of market neutrality).
+
+In future issues, I will search for this alpha by creating portfolios
+based on accounting , financial and trading specific variables. A simple
+example is to create a portfolio based on categorical variables. I will
+look at nine variables in particular, and assign a 1 if the signal is a
+positive development and a 0 if it is a negative development. I will
+then aggregate these scores for all stocks in my universe, sort into
+deciles and regress top performing deciles minus lesser performing
+deciles on the benchmark return. The accounting variables I will look at
+to create an F-score with are:
+
+\begin{itemize}
+\item
+  \begin{enumerate}
+  \def\labelenumi{\arabic{enumi})}
+  \tightlist
+  \item
+    Return on Assets
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{\arabic{enumi})}
+  \setcounter{enumi}{1}
+  \tightlist
+  \item
+    CFO: earnings + depreciation - (CA-CL)
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{\arabic{enumi})}
+  \setcounter{enumi}{2}
+  \tightlist
+  \item
+    Change in ROA
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{\arabic{enumi})}
+  \setcounter{enumi}{3}
+  \tightlist
+  \item
+    Accruals
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{\arabic{enumi})}
+  \setcounter{enumi}{4}
+  \tightlist
+  \item
+    Change in leverage: change in (LTD-TA)
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{\arabic{enumi})}
+  \setcounter{enumi}{5}
+  \tightlist
+  \item
+    Change in liquidity: change in (CA-CL)
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{\arabic{enumi})}
+  \setcounter{enumi}{6}
+  \tightlist
+  \item
+    EQ Offer: did company issue common stocks?
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{\arabic{enumi})}
+  \setcounter{enumi}{7}
+  \tightlist
+  \item
+    Change in gross margin: change in (gross profit / net sales)
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{\arabic{enumi})}
+  \setcounter{enumi}{8}
+  \tightlist
+  \item
+    Change in asset turnover ratio: change in (revenue / average total
+    assets)
+  \end{enumerate}
+\end{itemize}
+
+    Since the goal is to outperform a benchmark, we need to define that
+benchmark. I will conclude this issue with some descriptive statistics
+regarding association of individual stocks in our universe with factors.
+Remember, that in order to trade these factors we need to use the
+portfolio weights calculated via eigenvectors. In our universe, each
+eigenvector has 470 components which means trading every one of those
+stocks to get exposure to the latent factor. In practice, this is rather
+unrealistic. We can solve this over trading issue in two ways:
+\textbf{1)} we can significantly reduce our universe or \textbf{2)} we
+can use a proxy for factor returns. Using a proxy, such as an ETF to
+represent our systematic variable is commonplace in practice. It is
+difficult to identify good proxies, however, without running a PCA.
+
+The following formula will give us standardized factor returns which we
+can use to identify the strength of association of each stock with each
+factor:
+
+\[ F_{jt} = \sum_{i=1}^n (\frac{1}{\sqrt{\lambda_{j}}} * \frac{Vj_{i}}{\sigma_{i}})*R_{it}\]
+
+Lets do this in code on a two year sample:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}12}]:} \PY{n}{i}\PY{o}{=}\PY{l+m+mi}{0}
+         \PY{n}{stocks} \PY{o}{=} \PY{n}{stocks}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{n}{i}\PY{p}{:}\PY{n}{i}\PY{o}{+}\PY{l+m+mi}{504}\PY{p}{]}
+         \PY{n}{stocks\PYZus{}ret} \PY{o}{=} \PY{n}{stocks\PYZus{}ret}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{n}{i}\PY{p}{:}\PY{n}{i}\PY{o}{+}\PY{l+m+mi}{504}\PY{p}{]}
+         \PY{n}{factor\PYZus{}returns} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         \PY{n}{num\PYZus{}comps} \PY{o}{=} \PY{l+m+mi}{3}
+         \PY{n}{sigma\PYZus{}bar} \PY{o}{=} \PY{n}{stocks\PYZus{}ret}\PY{o}{.}\PY{n}{apply}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{std}\PY{p}{,}\PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
+         \PY{n}{stocks\PYZus{}ret\PYZus{}std} \PY{o}{=} \PY{n}{StandardScaler}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{fit\PYZus{}transform}\PY{p}{(}\PY{n}{stocks\PYZus{}ret}\PY{p}{)}
+         \PY{n}{stocks\PYZus{}ret\PYZus{}std} \PY{o}{=} \PY{n}{p}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{stocks\PYZus{}ret\PYZus{}std}\PY{p}{)}
+         \PY{n}{stocks\PYZus{}ret\PYZus{}std}\PY{o}{.}\PY{n}{index} \PY{o}{=} \PY{n}{stocks\PYZus{}ret}\PY{o}{.}\PY{n}{index}
+         \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{num\PYZus{}comps}\PY{p}{)}\PY{p}{:}
+             \PY{n}{V} \PY{o}{=} \PY{n}{eig\PYZus{}pairs}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}  \PY{c+c1}{\PYZsh{}standardized eigenvector, numpy standardizes automatically}
+             \PY{n}{eig\PYZus{}val} \PY{o}{=} \PY{n}{eig\PYZus{}pairs}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+             \PY{n}{portfolio\PYZus{}weights} \PY{o}{=} \PY{p}{(}\PY{l+m+mi}{1}\PY{o}{/}\PY{n}{np}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{n}{eig\PYZus{}val}\PY{p}{)}\PY{p}{)} \PY{o}{*} \PY{p}{(}\PY{n}{V} \PY{o}{/} \PY{n}{sigma\PYZus{}bar}\PY{p}{)} \PY{c+c1}{\PYZsh{}\PYZsh{} run standardized returns against this}
+             \PY{n}{portfolio\PYZus{}weights1} \PY{o}{=} \PY{n}{V}                    \PY{c+c1}{\PYZsh{}\PYZsh{} non standardized rets, if i standardize after will it be the same?}
+             \PY{c+c1}{\PYZsh{}\PYZsh{} last row of stocks \PYZus{}ret, trailing 252 day window, local variable}
+             \PY{n}{F} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{matmul}\PY{p}{(}\PY{n}{stocks\PYZus{}ret}\PY{p}{,}\PY{n}{portfolio\PYZus{}weights}\PY{p}{)} 
+             \PY{n}{factor\PYZus{}returns}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{F}\PY{p}{)}
+         
+         \PY{n}{factor\PYZus{}returns} \PY{o}{=} \PY{n}{p}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{factor\PYZus{}returns}\PY{p}{)}\PY{o}{.}\PY{n}{T}
+         \PY{n}{factor\PYZus{}returns}\PY{o}{.}\PY{n}{index} \PY{o}{=} \PY{n}{stocks\PYZus{}ret}\PY{o}{.}\PY{n}{index}
+         
+         \PY{n}{intercept} \PY{o}{=} \PY{n}{p}\PY{o}{.}\PY{n}{Series}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{ones}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{factor\PYZus{}returns}\PY{p}{)}\PY{p}{)}\PY{p}{,}\PY{n}{index}\PY{o}{=}\PY{n}{factor\PYZus{}returns}\PY{o}{.}\PY{n}{index}\PY{p}{)}
+         \PY{n}{X} \PY{o}{=} \PY{n}{p}\PY{o}{.}\PY{n}{concat}\PY{p}{(}\PY{p}{[}\PY{n}{intercept}\PY{p}{,}\PY{n}{factor\PYZus{}returns}\PY{p}{]}\PY{p}{,}\PY{n}{axis} \PY{o}{=}\PY{l+m+mi}{1} \PY{p}{)}
+         \PY{n}{X} \PY{o}{=} \PY{n}{X}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{60}\PY{p}{:}\PY{p}{]}
+         \PY{c+c1}{\PYZsh{} this function only needs to take in y because we are not iterating X}
+         \PY{k}{def} \PY{n+nf}{matrix\PYZus{}regression}\PY{p}{(}\PY{n}{y}\PY{p}{)}\PY{p}{:}
+             \PY{n}{b} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{matmul}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{matmul}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{linalg}\PY{o}{.}\PY{n}{inv}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{matmul}\PY{p}{(}\PY{n}{X}\PY{o}{.}\PY{n}{T}\PY{p}{,}\PY{n}{X}\PY{p}{)}\PY{p}{)}\PY{p}{,}\PY{n}{X}\PY{o}{.}\PY{n}{T}\PY{p}{)}\PY{p}{,}\PY{n}{y}\PY{p}{)}
+             \PY{n}{e} \PY{o}{=} \PY{n}{y} \PY{o}{\PYZhy{}} \PY{n}{np}\PY{o}{.}\PY{n}{matmul}\PY{p}{(}\PY{n}{X}\PY{p}{,}\PY{n}{b}\PY{p}{)}
+             \PY{k}{return} \PY{n+nb}{list}\PY{p}{(}\PY{n}{b}\PY{p}{)} \PY{p}{,} \PY{n+nb}{list}\PY{p}{(}\PY{n}{e}\PY{p}{)}
+         
+         \PY{n}{betas} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         \PY{n}{residuals} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         
+         \PY{k}{for} \PY{n}{j} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{stocks\PYZus{}ret}\PY{o}{.}\PY{n}{columns}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+             \PY{n}{b} \PY{o}{=} \PY{n}{matrix\PYZus{}regression}\PY{p}{(}\PY{n}{stocks\PYZus{}ret\PYZus{}std}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{60}\PY{p}{:}\PY{p}{,}\PY{n}{j}\PY{p}{]}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+             \PY{n}{e} \PY{o}{=} \PY{n}{matrix\PYZus{}regression}\PY{p}{(}\PY{n}{stocks\PYZus{}ret\PYZus{}std}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{60}\PY{p}{:}\PY{p}{,}\PY{n}{j}\PY{p}{]}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}
+             \PY{n}{betas}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{b}\PY{p}{)}
+             \PY{n}{residuals}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{e}\PY{p}{)}
+         
+         
+         \PY{n}{out\PYZus{}betas} \PY{o}{=} \PY{n}{p}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{betas}\PY{p}{)}
+         \PY{n}{out\PYZus{}resid} \PY{o}{=} \PY{n}{p}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{residuals}\PY{p}{)}
+         \PY{n}{out\PYZus{}betas}\PY{o}{.}\PY{n}{index} \PY{o}{=}  \PY{n}{stocks\PYZus{}ret}\PY{o}{.}\PY{n}{columns}
+         \PY{n}{out\PYZus{}betas}\PY{o}{.}\PY{n}{columns} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Intercept}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{PC1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{PC2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{PC3}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+         \PY{n}{out\PYZus{}resid}\PY{o}{.}\PY{n}{index} \PY{o}{=} \PY{n}{stocks\PYZus{}ret}\PY{o}{.}\PY{n}{columns}  
+         
+         \PY{n}{out\PYZus{}betas}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{l+m+mi}{100}\PY{p}{:}\PY{l+m+mi}{110}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{:}\PY{l+m+mi}{5}\PY{p}{]}\PY{o}{*}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}12}]:}            PC1       PC2       PC3
+         Name                              
+         CMI   0.557737 -0.032992  0.100275
+         CMS   0.464087 -0.794050  0.209554
+         CNC   0.325731 -0.045411 -0.028483
+         CNP   0.690558 -0.448665  0.292630
+         COF   0.615758  0.113391 -0.104251
+         COG   0.252130  0.092892  0.250614
+         COL   0.482115 -0.042353 -0.060417
+         COO   0.473383 -0.171672 -0.001763
+         COP   0.800334  0.251649  0.639363
+         COST  0.585775  0.089071 -0.128283
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}13}]:} \PY{n}{out\PYZus{}resid}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{l+m+mi}{100}\PY{p}{:}\PY{l+m+mi}{110}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{:}\PY{l+m+mi}{7}\PY{p}{]}\PY{o}{*}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}13}]:}              1         2         3         4         5         6
+         Name                                                            
+         CMI  -0.349058  0.145802  0.221249  0.641513 -0.231436 -1.699294
+         CMS  -0.077971 -0.229609  0.160163  0.170610  0.409655  0.045226
+         CNC   0.411780 -0.565699  0.120376  0.083662  0.022133  0.599447
+         CNP   0.182206 -0.617575 -0.457541  0.474514  0.249605  0.776686
+         COF  -0.398990  0.447185  0.198728  0.437175 -0.435021  0.125504
+         COG  -1.145442 -0.077324  0.333445 -1.205746 -0.674571  0.772493
+         COL   0.595124  0.698568  0.135737 -0.611149  0.038198  0.226661
+         COO  -0.304748 -1.455226 -1.744702  0.799868  0.223380  0.486449
+         COP  -0.091645 -0.261159 -0.042297 -0.237004  0.065249  0.901505
+         COST  0.105308  0.053319  0.012622 -0.648303  0.775995  0.070616
+\end{Verbatim}
+            
+    Here is an excerpt from our beta estimates (table1) and the
+corresponding residuals (table2). These betas are standardized and thus
+can be interpreted as correlations to each PC. The residuals are also
+standardized and can be considered the distance in standard deviations
+from the unconditional mean (zero). Remember, each PC is uncorrelated
+with one another. I will close the issue with this. Please think about
+how we could use the information in these tables to design a strategy
+relative to a benchmark or systematic component.
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
